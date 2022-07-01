@@ -2,12 +2,12 @@
 
 namespace Medoo\Drivers;
 
-class Oracle extends Driver
+class Sybase extends Driver
 {
 
     public function __construct(array $options)
     {
-        $options['type'] = $options['database_type'] = 'oracle';
+        $options['type'] = $options['database_type'] = 'sybase';
 
         $this->setOption(new DriverOption($options));
     }

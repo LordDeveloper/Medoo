@@ -2,7 +2,13 @@
 
 namespace Medoo\Drivers;
 
-class PgSQL implements Driver
+class PgSQL extends Driver
 {
 
+    public function __construct(array $options)
+    {
+        $options['type'] = $options['database_type'] = 'pgsql';
+
+        $this->setOption(new DriverOption($options));
+    }
 }

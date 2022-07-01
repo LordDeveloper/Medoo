@@ -2,11 +2,12 @@
 
 namespace Medoo\Drivers;
 
-class MySQL implements Driver
+class MySQL extends Driver
 {
-
-    public function getDriver(): string
+    public function __construct(array $options)
     {
-        return 'mysql';
+        $options['type'] = $options['database_type'] = 'mysql';
+
+        $this->setOption(new DriverOption($options));
     }
 }
