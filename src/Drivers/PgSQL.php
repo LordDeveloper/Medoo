@@ -9,6 +9,6 @@ class PgSQL extends Driver
     {
         $options['type'] = $options['database_type'] = 'pgsql';
 
-        $this->setOption(new DriverOption($options));
+        $this->setDriverOptions($options);
     }
 }

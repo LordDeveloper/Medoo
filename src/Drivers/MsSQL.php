@@ -9,6 +9,6 @@ class MsSQL extends Driver
     {
         $options['type'] = $options['database_type'] = 'mssql';
 
-        $this->setOption(new DriverOption($options));
+        $this->setDriverOptions($options);
     }
 }

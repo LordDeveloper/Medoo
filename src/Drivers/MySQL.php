@@ -8,6 +8,6 @@ class MySQL extends Driver
     {
         $options['type'] = $options['database_type'] = 'mysql';
 
-        $this->setOption(new DriverOption($options));
+        $this->setDriverOptions($options);
     }
 }

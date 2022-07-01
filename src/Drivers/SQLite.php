@@ -9,6 +9,6 @@ class SQLite extends Driver
     {
         $options['type'] = $options['database_type'] = 'sqlite';
 
-        $this->setOption(new DriverOption($options));
+        $this->setDriverOptions($options);
     }
 }

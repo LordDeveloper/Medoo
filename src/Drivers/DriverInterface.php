@@ -2,10 +2,13 @@
 
 namespace Medoo\Drivers;
 
+use Amp\Promise;
+
 interface DriverInterface
 {
+    public function create(): Promise;
 
-    public function getOption(): DriverOption;
+    public function getDriverOptions(): array;
 
-    public function setOption(DriverOption $option);
+    public function setDriverOptions(array $driverOption);
 }

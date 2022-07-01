@@ -9,6 +9,6 @@ class Sybase extends Driver
     {
         $options['type'] = $options['database_type'] = 'sybase';
 
-        $this->setOption(new DriverOption($options));
+        $this->setDriverOptions($options);
     }
 }

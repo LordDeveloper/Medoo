@@ -9,6 +9,6 @@ class Oracle extends Driver
     {
         $options['type'] = $options['database_type'] = 'oracle';
 
-        $this->setOption(new DriverOption($options));
+        $this->setDriverOptions($options);
     }
 }
