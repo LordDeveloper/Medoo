@@ -25,42 +25,8 @@ use InvalidArgumentException;
 /**
  * The Medoo raw object.
  */
-class Raw
-{
-    /**
-     * The array of mapping data for the raw string.
-     *
-     * @var array
-     */
-    public $map;
 
-    /**
-     * The raw string.
-     *
-     * @var string
-     */
-    public $value;
-}
-
-/**
- * @method array select(string $table, array $columns, array $where)
- * @method null select(string $table, array $columns, callable $callback)
- * @method null select(string $table, array $columns, array $where, callable $callback)
- * @method null select(string $table, array $join, array $columns, array $where, callable $callback)
- * @method mixed get(string $table, array|string $columns, array $where)
- * @method bool has(string $table, array $where)
- * @method mixed rand(string $table, array|string $column, array $where)
- * @method int count(string $table, array $where)
- * @method int max(string $table, string $column)
- * @method int min(string $table, string $column)
- * @method int avg(string $table, string $column)
- * @method int sum(string $table, string $column)
- * @method int max(string $table, string $column, array $where)
- * @method int min(string $table, string $column, array $where)
- * @method int avg(string $table, string $column, array $where)
- * @method int sum(string $table, string $column, array $where)
- */
-class Medoo
+class Database
 {
     /**
      * The PDO object.
@@ -194,7 +160,7 @@ class Medoo
      * ```
      *
      * @param array $options Connection options
-     * @return Medoo
+     * @return Database
      * @throws PDOException
      * @link https://medoo.in/api/new
      * @codeCoverageIgnore
@@ -1946,7 +1912,7 @@ class Medoo
 
         $query = $this->exec(
             $this->type === 'mssql' ?
-                $this->selectContext($table, $map, $join, $column, $where, Medoo::raw('TOP 1 1')) :
+                $this->selectContext($table, $map, $join, $column, $where, Database::raw('TOP 1 1')) :
                 'SELECT EXISTS(' . $this->selectContext($table, $map, $join, $column, $where, 1) . ')',
             $map
         );
@@ -2140,7 +2106,7 @@ class Medoo
      * Enable debug mode and output readable statement string.
      *
      * @codeCoverageIgnore
-     * @return Medoo
+     * @return Database
      */
     public function debug(): self
     {

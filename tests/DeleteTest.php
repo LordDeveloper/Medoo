@@ -2,7 +2,7 @@
 
 namespace Medoo\Tests;
 
-use Medoo\Medoo;
+use Medoo\Database;
 
 /**
  * @coversDefaultClass \Medoo\Medoo
@@ -41,7 +41,7 @@ class DeleteTest extends MedooTestCase
     {
         $this->setType($type);
 
-        $whereClause = Medoo::raw("WHERE (<type> = :type AND <age> < :age)", [
+        $whereClause = Database::raw("WHERE (<type> = :type AND <age> < :age)", [
             ':type' => 'business',
             ':age' => 18,
         ]);

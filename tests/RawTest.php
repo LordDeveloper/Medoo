@@ -2,7 +2,7 @@
 
 namespace Medoo\Tests;
 
-use Medoo\Medoo;
+use Medoo\Database;
 
 /**
  * @coversDefaultClass \Medoo\Medoo

@@ -2,11 +2,11 @@
 
 namespace Medoo\Tests;
 
-use Medoo\Medoo;
+use Medoo\Database;
 use InvalidArgumentException;
 
 /**
- * @coversDefaultClass \Medoo\Medoo
+ * @coversDefaultClass \Medoo\Database
  */
 class QuoteTest extends MedooTestCase
 {
@@ -91,7 +91,7 @@ class QuoteTest extends MedooTestCase
      */
     public function testPrefixTableQuote()
     {
-        $database = new Medoo([
+        $database = new Database([
             'testMode' => true,
             'prefix' => 'PREFIX_'
         ]);

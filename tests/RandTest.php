@@ -3,7 +3,7 @@
 namespace Medoo\Tests;
 
 /**
- * @coversDefaultClass \Medoo\Medoo
+ * @coversDefaultClass \Medoo\Database
  */
 class RandTest extends MedooTestCase
 {

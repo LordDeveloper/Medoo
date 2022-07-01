@@ -5,7 +5,7 @@ namespace Medoo\Tests;
 use InvalidArgumentException;
 
 /**
- * @coversDefaultClass \Medoo\Medoo
+ * @coversDefaultClass \Medoo\Database
  */
 class ReplaceTest extends MedooTestCase
 {

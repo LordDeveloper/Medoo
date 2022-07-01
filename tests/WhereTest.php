@@ -2,10 +2,10 @@
 
 namespace Medoo\Tests;
 
-use Medoo\Medoo;
+use Medoo\Database;
 
 /**
- * @coversDefaultClass \Medoo\Medoo
+ * @coversDefaultClass \Medoo\Database
  */
 class WhereTest extends MedooTestCase
 {
@@ -29,7 +29,7 @@ class WhereTest extends MedooTestCase
             "age[<>]" => [200, 500],
             "age[><]" => [200, 500],
             "income[>]" => Medoo::raw("COUNT(<average>)"),
-            "remote_id" => Medoo::raw("UUID()"),
+            "remote_id" => Database::raw("UUID()"),
             "location" => null,
             "is_selected" => true
         ]);
@@ -249,7 +249,7 @@ class WhereTest extends MedooTestCase
                 "email[!]" => ["foo@bar.com", "admin@medoo.in"],
                 "city[!]" => null,
                 "promoted[!]" => true,
-                "location[!]" => Medoo::raw('LOWER("New York")')
+                "location[!]" => Database::raw('LOWER("New York")')
             ]
         ]);
 
@@ -713,7 +713,7 @@ class WhereTest extends MedooTestCase
         $this->setType($type);
 
         $this->database->select("account", "user_name", [
-            "ORDER" => Medoo::raw("<location>, <gender>")
+            "ORDER" => Database::raw("<location>, <gender>")
         ]);
 
         $this->assertQuery(
@@ -932,7 +932,7 @@ class WhereTest extends MedooTestCase
         $this->setType($type);
 
         $this->database->select("account", "user_name", [
-            'GROUP' => Medoo::raw("<location>, <gender>")
+            'GROUP' => Database::raw("<location>, <gender>")
         ]);
 
         $this->assertQuery(
@@ -982,7 +982,7 @@ class WhereTest extends MedooTestCase
         $this->setType($type);
 
         $this->database->select("account", "user_name", [
-            'HAVING' => Medoo::raw('<location> = LOWER("NEW YORK")')
+            'HAVING' => Database::raw('<location> = LOWER("NEW YORK")')
         ]);
 
         $this->assertQuery(
@@ -1006,7 +1006,7 @@ class WhereTest extends MedooTestCase
         $this->setType($type);
 
         $this->database->select("account", [
-            "total" => Medoo::raw('SUM(<salary>)')
+            "total" => Database::raw('SUM(<salary>)')
         ], [
             'HAVING' => Medoo::raw('SUM(<salary>) > 1000')
         ]);
@@ -1034,7 +1034,7 @@ class WhereTest extends MedooTestCase
         $this->database->select(
             "account",
             "user_name",
-            Medoo::raw("WHERE <id> => 10")
+            Database::raw("WHERE <id> => 10")
         );
 
         $this->assertQuery(
@@ -1065,7 +1065,7 @@ class WhereTest extends MedooTestCase
             [
                 "post.content"
             ],
-            Medoo::raw("WHERE <id> => 10")
+            Database::raw("WHERE <id> => 10")
         );
 
         $this->assertQuery(

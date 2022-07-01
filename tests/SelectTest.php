@@ -162,7 +162,7 @@ class SelectTest extends MedooTestCase
         $this->setType($type);
 
         $this->database->select("account", [
-            "id [String]" => Medoo::raw("UUID()")
+            "id [String]" => Database::raw("UUID()")
         ]);
 
         $this->assertQuery(
@@ -501,7 +501,7 @@ class SelectTest extends MedooTestCase
         $this->setType($type);
 
         $this->database->select("account", [
-            "[>]post" => Medoo::raw("ON <account.user_id> = <post.author_id>")
+            "[>]post" => Database::raw("ON <account.user_id> = <post.author_id>")
         ], [
             "account.name",
             "post.title"

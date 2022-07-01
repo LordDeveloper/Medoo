@@ -5,7 +5,7 @@ namespace Medoo\Tests;
 use Medoo\Medoo;
 
 /**
- * @coversDefaultClass \Medoo\Medoo
+ * @coversDefaultClass \Medoo\Database
  */
 class QueryTest extends MedooTestCase
 {
@@ -38,7 +38,7 @@ class QueryTest extends MedooTestCase
      */
     public function testQueryWithPrefix()
     {
-        $database = new Medoo([
+        $database = new Database([
             'testMode' => true,
             'prefix' => 'PREFIX_'
         ]);
@@ -115,7 +115,7 @@ class QueryTest extends MedooTestCase
      */
     public function testQueryEscape()
     {
-        $database = new Medoo([
+        $database = new Database([
             'testMode' => true,
             'prefix' => 'PREFIX_'
         ]);

@@ -2,7 +2,7 @@
 
 namespace Medoo\Tests;
 
-use Medoo\Medoo;
+use Medoo\Database;
 
 /**
  * @coversDefaultClass \Medoo\Medoo
@@ -32,7 +32,7 @@ class DropTest extends MedooTestCase
      */
     public function testDropWithPrefix()
     {
-        $database = new Medoo([
+        $database = new Database([
             'testMode' => true,
             'prefix' => 'PREFIX_'
         ]);

@@ -2,10 +2,10 @@
 
 namespace Medoo\Tests;
 
-use Medoo\Medoo;
+use Medoo\Database;
 
 /**
- * @coversDefaultClass \Medoo\Medoo
+ * @coversDefaultClass \Medoo\Database
  */
 class UpdateTest extends MedooTestCase
 {
@@ -27,7 +27,7 @@ class UpdateTest extends MedooTestCase
             "lang" => ["en", "fr"],
             "lang [JSON]" => ["en", "fr"],
             "is_locked" => true,
-            "uuid" => Medoo::raw("UUID()"),
+            "uuid" => Database::raw("UUID()"),
             "object" => $objectData
         ], [
             "user_id[<]" => 1000

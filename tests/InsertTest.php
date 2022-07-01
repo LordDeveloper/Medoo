@@ -2,10 +2,10 @@
 
 namespace Medoo\Tests;
 
-use Medoo\Medoo;
+use Medoo\Database;
 
 /**
- * @coversDefaultClass \Medoo\Medoo
+ * @coversDefaultClass \Medoo\Database
  */
 class InsertTest extends MedooTestCase
 {
@@ -93,7 +93,7 @@ class InsertTest extends MedooTestCase
         $this->setType($type);
 
         $this->database->insert("account", [
-            "user_name" => Medoo::raw("UUID()")
+            "user_name" => Database::raw("UUID()")
         ]);
 
         $this->assertQuery(

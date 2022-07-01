@@ -53,7 +53,7 @@ require 'vendor/autoload.php';
 use Medoo\Medoo;
 
 // Connect the database.
-$database = new Medoo([
+$database = new Database([
     'type' => 'mysql',
     'host' => 'localhost',
     'database' => 'name',
