@@ -2,7 +2,7 @@
 
 namespace Medoo\Drivers;
 
-class PgSQL extends Driver
+class PostgreSQL extends Driver
 {
 
     public function __construct(array $options)
