@@ -3,10 +3,10 @@
 </p>
 
 <p align="center">
-    <a href="https://github.com/catfan/Medoo/actions"><img alt="Build Status" src="https://github.com/catfan/Medoo/actions/workflows/php.yml/badge.svg"></a>
-    <a href="https://packagist.org/packages/catfan/medoo"><img alt="Total Downloads" src="https://poser.pugx.org/catfan/medoo/downloads"></a>
-    <a href="https://packagist.org/packages/catfan/medoo"><img alt="Latest Stable Version" src="https://poser.pugx.org/catfan/medoo/v/stable"></a>
-    <a href="https://packagist.org/packages/catfan/medoo"><img alt="License" src="https://poser.pugx.org/catfan/medoo/license"></a>
+    <a href="https://github.com/catfan/Medoo/actions"><img alt="Build Status" src="https://github.com/lorddeveloper/Medoo/actions/workflows/php.yml/badge.svg"></a>
+    <a href="https://packagist.org/packages/catfan/medoo"><img alt="Total Downloads" src="https://poser.pugx.org/lorddeveloper/medoo/downloads"></a>
+    <a href="https://packagist.org/packages/catfan/medoo"><img alt="Latest Stable Version" src="https://poser.pugx.org/lorddeveloper/medoo/v/stable"></a>
+    <a href="https://packagist.org/packages/catfan/medoo"><img alt="License" src="https://poser.pugx.org/lorddeveloper/medoo/license"></a>
     <a href="https://opencollective.com/medoo"><img alt="Backers on Open Collective" src="https://opencollective.com/Medoo/backers/badge.svg"></a>
     <a href="https://opencollective.com/medoo"><img alt="Sponsors on Open Collective" src="https://opencollective.com/Medoo/sponsors/badge.svg"> </a>
 </p>
@@ -29,7 +29,7 @@
 
 ## Requirement
 
-PHP 7.3+ and installed PDO extension.
+PHP 8.0+ and installed PDO extension.
 
 ## Get Started
 
