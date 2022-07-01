@@ -2,7 +2,7 @@
 
 namespace Medoo\Drivers;
 
-class MsSQL extends Driver
+class MSSQL extends Driver
 {
 
     public function __construct(array $options)
