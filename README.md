@@ -37,7 +37,7 @@ PHP 7.3+ and installed PDO extension.
 
 Add Medoo to the composer.json configuration file.
 ```
-$ composer require catfan/medoo
+$ composer require jove/medoo
 ```
 
 And update the composer
@@ -47,39 +47,42 @@ $ composer update
 
 ```php
 // Require Composer's autoloader.
-require 'vendor/autoload.php';
+require __DIR__ .'/vendor/autoload.php';
 
+use Amp\Loop;
 // Using Medoo namespace.
-use Medoo\Medoo;
+use Medoo;
 
-// Connect the database.
-$database = new Database([
-    'type' => 'mysql',
-    'host' => 'localhost',
-    'database' => 'name',
-    'username' => 'your_username',
-    'password' => 'your_password'
-]);
+// Running the event loop
+Loop::run(function () {
+    // Connect the database.
+    $database = yield Medoo\connect(Medoo\Drivers\MySQL::class, [
+        'host' => 'localhost',
+        'database' => 'name',
+        'username' => 'your_username',
+        'password' => 'your_password'
+    ]);
+    
+    // Enjoy
+    yield $database->insert('account', [
+        'user_name' => 'foo',
+        'email' => 'foo@bar.com'
+    ]);
+    
+    $data = yield $database->select('account', [
+        'user_name',
+        'email'
+    ], [
+        'user_id' => 50
+    ]);
+    
+    echo json_encode($data);
 
-// Enjoy
-$database->insert('account', [
-    'user_name' => 'foo',
-    'email' => 'foo@bar.com'
-]);
-
-$data = $database->select('account', [
-    'user_name',
-    'email'
-], [
-    'user_id' => 50
-]);
-
-echo json_encode($data);
-
-// [{
-//    "user_name" : "foo",
-//    "email" : "foo@bar.com",
-// }]
+    // [{
+    //    "user_name" : "foo",
+    //    "email" : "foo@bar.com",
+    // }]
+});
 ```
 
 ## Contribution Guides
