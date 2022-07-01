@@ -52,7 +52,7 @@ class Database
     /**
      * The PDO statement object.
      *
-     * @var \PDOStatement
+     * @var PDOStatement
      */
     protected $statement;
 
@@ -160,7 +160,7 @@ class Database
      * ```
      *
      * @param array $options Connection options
-     * @return Database
+     * @return void
      * @throws PDOException
      * @link https://medoo.in/api/new
      * @codeCoverageIgnore
@@ -460,7 +460,7 @@ class Database
      *
      * @param string $statement The raw SQL statement.
      * @param array $map The array of input parameters value for prepared statement.
-     * @return \PDOStatement|null
+     * @return PDOStatement|null
      */
     public function query(string $statement, array $map = []): ?PDOStatement
     {
@@ -476,7 +476,7 @@ class Database
      * @param string $statement The SQL statement.
      * @param array $map The array of input parameters value for prepared statement.
      * @codeCoverageIgnore
-     * @return \PDOStatement|null
+     * @return PDOStatement|null
      */
     public function exec(string $statement, array $map = [], callable $callback = null): ?PDOStatement
     {
@@ -1448,7 +1448,7 @@ class Database
      * @param string $query
      * @param array $map
      * @param array $data
-     * @return \PDOStatement|null
+     * @return PDOStatement|null
      */
     private function returningQuery($query, &$map, &$data): ?PDOStatement
     {
@@ -1483,7 +1483,7 @@ class Database
      * @param string $table
      * @param array $columns Columns definition.
      * @param array $options Additional table options for creating a table.
-     * @return \PDOStatement|null
+     * @return PDOStatement|null
      */
     public function create(string $table, $columns, $options = null): ?PDOStatement
     {
@@ -1528,7 +1528,7 @@ class Database
      * Drop a table.
      *
      * @param string $table
-     * @return \PDOStatement|null
+     * @return PDOStatement|null
      */
     public function drop(string $table): ?PDOStatement
     {
@@ -1622,7 +1622,7 @@ class Database
      * @param string $table
      * @param array $values
      * @param string $primaryKey
-     * @return \PDOStatement|null
+     * @return PDOStatement|null
      */
     public function insert(string $table, array $values, string $primaryKey = null): ?PDOStatement
     {
@@ -1725,7 +1725,7 @@ class Database
      * @param string $table
      * @param array $data
      * @param array $where
-     * @return \PDOStatement|null
+     * @return PDOStatement|null
      */
     public function update(string $table, $data, $where = null): ?PDOStatement
     {
@@ -1799,7 +1799,7 @@ class Database
      *
      * @param string $table
      * @param array|Raw $where
-     * @return \PDOStatement|null
+     * @return PDOStatement|null
      */
     public function delete(string $table, $where): ?PDOStatement
     {
@@ -1814,7 +1814,7 @@ class Database
      * @param string $table
      * @param array $columns
      * @param array $where
-     * @return \PDOStatement|null
+     * @return PDOStatement|null
      */
     public function replace(string $table, array $columns, $where = null): ?PDOStatement
     {

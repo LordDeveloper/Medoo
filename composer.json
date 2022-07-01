@@ -13,7 +13,7 @@
 		{"name": "Angel Lai", "email": "angel@medoo.in"}
 	],
 	"require": {
-		"php": ">=7.3",
+		"php": ">=7.4",
 		"ext-pdo": "*"
 	},
 	"require-dev": {
