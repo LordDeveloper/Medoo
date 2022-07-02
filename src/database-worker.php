@@ -19,6 +19,10 @@ return static function (Channel $channel): Generator {
 
                 $response = yield $database->{$command}(... $arguments);
 
+                if ($response instanceof PDOStatement) {
+                    $response = new \Medoo\Grammars\PDOStatement($response);
+                }
+
                 yield $channel->send(serialize($response));
             } catch (Throwable $e) {
                 yield $channel->send(serialize($e));
