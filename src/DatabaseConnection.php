@@ -9,6 +9,7 @@ use Amp\Sql\ConnectionException;
 use Error;
 use Exception;
 use Medoo\Drivers\Driver;
+use Medoo\Responses\FailureProcessResponse;
 use function Amp\call;
 use function Opis\Closure\unserialize;
 
@@ -26,8 +27,8 @@ class DatabaseConnection
         return call(function () use ($arguments, $name) {
             $response = yield $this->driver->send([$name, $arguments]);
 
-            if ($response instanceof Exception || $response instanceof Error) {
-                throw $response;
+            if ($response instanceof FailureProcessResponse) {
+                $response->throw();
             }
 
             return $response;

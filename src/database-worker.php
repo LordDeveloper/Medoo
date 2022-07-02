@@ -3,6 +3,7 @@
 use Amp\Parallel\Sync\Channel;
 use Medoo\Database;
 use Medoo\Drivers\DriverOption;
+use Medoo\Responses\FailureProcessResponse;
 use function Opis\Closure\{serialize, unserialize};
 
 return static function (Channel $channel): Generator {
@@ -25,10 +26,10 @@ return static function (Channel $channel): Generator {
 
                 yield $channel->send(serialize($response));
             } catch (Throwable $e) {
-                yield $channel->send(serialize($e));
+                yield $channel->send(serialize(new FailureProcessResponse($e)));
             }
         }
     } catch (Throwable $e) {
-        yield $channel->send(serialize($e));
+        yield $channel->send(serialize(new FailureProcessResponse($e)));
     }
 };
