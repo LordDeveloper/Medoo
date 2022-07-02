@@ -21,13 +21,13 @@ $ composer update
 require __DIR__ .'/vendor/autoload.php';
 
 use Amp\Loop;
-// Using Medoo namespace.
-use Medoo;
+use function Medoo\connect;
+use Medoo\Drivers\MySQL;
 
 // Running the event loop
 Loop::run(function () {
     // Connect the database.
-    $database = yield Medoo\connect(Medoo\Drivers\MySQL::class, [
+    $database = yield connect(MySQL::class, [
         'host' => 'localhost',
         'database' => 'name',
         'username' => 'your_username',
