@@ -6,12 +6,12 @@ use Amp\Parallel\Context\StatusError;
 use Amp\Parallel\Sync\SynchronizationError;
 use Amp\Promise;
 use Amp\Sql\ConnectionException;
-use Error;
-use Exception;
+use Medoo\Commands\CallActionCommand;
+use Medoo\Commands\CallPropertyCommand;
 use Medoo\Drivers\Driver;
 use Medoo\Responses\FailureProcessResponse;
+use Medoo\Responses\SuccessProcessResponse;
 use function Amp\call;
-use function Opis\Closure\unserialize;
 
 class DatabaseConnection
 {
@@ -22,16 +22,37 @@ class DatabaseConnection
         $this->driver = $driver;
     }
 
-    public function __call($name, $arguments)
+    public function __get($name)
     {
-        return call(function () use ($arguments, $name) {
-            $response = yield $this->driver->send([$name, $arguments]);
+        return call(function () use ($name) {
+            $response = yield $this->driver->send(
+                new CallPropertyCommand($name)
+            );
 
             if ($response instanceof FailureProcessResponse) {
                 $response->throw();
+            } else {
+                if ($response instanceof SuccessProcessResponse) {
+                    return $response->getResult();
+                }
             }
+        });
+    }
 
-            return $response;
+    public function __call($name, $arguments)
+    {
+        return call(function () use ($arguments, $name) {
+            $response = yield $this->driver->send(
+                new CallActionCommand([$name, $arguments])
+            );
+
+            if ($response instanceof FailureProcessResponse) {
+                $response->throw();
+            } else {
+                if ($response instanceof SuccessProcessResponse) {
+                    return $response->getResult();
+                }
+            }
         });
     }
 

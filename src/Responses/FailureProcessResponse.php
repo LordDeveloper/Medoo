@@ -4,7 +4,7 @@ namespace Medoo\Responses;
 
 use Throwable;
 
-class FailureProcessResponse
+class FailureProcessResponse implements Response
 {
     public $class;
     public $message;
