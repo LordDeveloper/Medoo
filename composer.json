@@ -1,5 +1,5 @@
 {
-	"name": "catfan/medoo",
+	"name": "jove/medoo",
 	"type": "framework",
 	"description": "The lightweight PHP database framework to accelerate development",
 	"keywords": ["database", "database library", "lightweight", "PHP framework", "SQL", "MySQL", "MSSQL", "SQLite", "PostgreSQL", "MariaDB", "Oracle"],
@@ -10,7 +10,8 @@
 		"source": "https://github.com/catfan/Medoo"
 	},
 	"authors": [
-		{"name": "Angel Lai", "email": "angel@medoo.in"}
+		{"name": "Angel Lai", "email": "angel@medoo.in"},
+		{"name": "Javad Sadeghi", "email": "jey@lorddeveloper.ir"}
 	],
 	"require": {
 		"php": ">=8.0",
