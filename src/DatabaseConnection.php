@@ -10,7 +10,7 @@ use Error;
 use Exception;
 use Medoo\Drivers\Driver;
 use function Amp\call;
-use function Amp\coroutine;
+use function Opis\Closure\unserialize;
 
 class DatabaseConnection
 {
@@ -58,30 +58,6 @@ class DatabaseConnection
     public function isAlive(): bool
     {
         return $this->driver->isAlive();
-    }
-
-    public function action(callable $actions): Promise
-    {
-        return call(function () use ($actions) {
-            $actions = coroutine($actions);
-
-            if (is_callable($actions)) {
-                yield $this->beginTransaction();
-
-                try {
-                    $result = yield $actions($this);
-
-                    if ($result === false) {
-                        yield $this->rollBack();
-                    } else {
-                        yield $this->commit();
-                    }
-                } catch (Exception $e) {
-                    yield $this->rollBack();
-                    throw $e;
-                }
-            }
-        });
     }
 
     public function getLastUsedAt(): int

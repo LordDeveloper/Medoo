@@ -3,6 +3,7 @@
 use Amp\Parallel\Sync\Channel;
 use Medoo\Database;
 use Medoo\Drivers\DriverOption;
+use function Opis\Closure\{serialize, unserialize};
 
 return static function (Channel $channel): Generator {
     try {
@@ -10,25 +11,20 @@ return static function (Channel $channel): Generator {
 
         $database = new Database(new DriverOption($options));
 
-        yield $channel->send(true);
+        yield $channel->send(serialize(true));
 
         while (true) {
             try {
-                [$command, $arguments] = yield $channel->receive();
+                [$command, $arguments] = unserialize(yield $channel->receive());
 
                 $response = yield $database->{$command}(... $arguments);
-                try {
-                    serialize($response);
 
-                    yield $channel->send($response);
-                } catch (Throwable $e) {
-                    yield $channel->send(null);
-                }
+                yield $channel->send(serialize($response));
             } catch (Throwable $e) {
-                yield $channel->send($e);
+                yield $channel->send(serialize($e));
             }
         }
     } catch (Throwable $e) {
-        yield $channel->send($e);
+        yield $channel->send(serialize($e));
     }
 };

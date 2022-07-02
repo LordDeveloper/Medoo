@@ -18,7 +18,8 @@
 		"ext-pdo": "*",
 		"amphp/amp": "^2.6",
 		"amphp/parallel": "^1.4",
-		"amphp/sql": "^1.0"
+		"amphp/sql": "^1.0",
+		"opis/closure": "^3.6"
 	},
 	"require-dev": {
         "phpunit/phpunit": "^9.0"

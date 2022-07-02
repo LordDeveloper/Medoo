@@ -11,7 +11,7 @@ use Amp\Sync\Mutex;
 use Amp\TimeoutException;
 use function Amp\call;
 use function Amp\Sync\synchronized;
-use function time;
+use function Opis\Closure\{serialize, unserialize};
 
 abstract class Driver implements DriverInterface, TransientResource
 {
@@ -45,7 +45,7 @@ abstract class Driver implements DriverInterface, TransientResource
 
             yield $this->context->send($this->getDriverOptions());
 
-            $response = yield $this->context->receive();
+            $response = unserialize(yield $this->context->receive());
 
             if ($response instanceof \Exception || $response instanceof \Error) {
                 throw $response;
@@ -79,9 +79,9 @@ abstract class Driver implements DriverInterface, TransientResource
                 throw new SynchronizationError('Process unexpectedly exited');
             }
 
-            yield $this->context->send($data);
+            yield $this->context->send(serialize($data));
 
-            $response = yield $this->context->receive();
+            $response = unserialize(yield $this->context->receive());
 
             $this->lastUsedAt = time();
 
