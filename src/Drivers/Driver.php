@@ -9,6 +9,7 @@ use Amp\Sql\TransientResource;
 use Amp\Sync\LocalMutex;
 use Amp\Sync\Mutex;
 use Amp\TimeoutException;
+use Medoo\Responses\FailureProcessResponse;
 use function Amp\call;
 use function Amp\Sync\synchronized;
 use function Opis\Closure\{serialize, unserialize};
@@ -47,8 +48,8 @@ abstract class Driver implements DriverInterface, TransientResource
 
             $response = unserialize(yield $this->context->receive());
 
-            if ($response instanceof \Exception || $response instanceof \Error) {
-                throw $response;
+            if ($response instanceof FailureProcessResponse) {
+                $response->throw();
             }
 
             $this->lastUsedAt = time();
