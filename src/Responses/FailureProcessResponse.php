@@ -8,12 +8,15 @@ use Throwable;
 
 class FailureProcessResponse implements Response
 {
+    private string $class;
+
     private array $props = [];
 
     public function __construct(Throwable $e)
     {
+        $this->class = get_class($e);
+
         $this->props = [
-            'class' => get_class($e),
             'code' => $e->getCode(),
             'line' => $e->getLine(),
             'message' => $e->getMessage(),
@@ -23,7 +26,7 @@ class FailureProcessResponse implements Response
 
     public function throw()
     {
-        $throwable = new $this->class($this->message);
+        $throwable = new $this->class();
 
         foreach ($this->props as $prop => $value) {
             $reflection = new ReflectionProperty(Exception::class, $prop);
