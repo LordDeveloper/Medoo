@@ -40,12 +40,14 @@ class FailureProcessResponse implements Response
     public function __serialize()
     {
         return [
+            'class' => $this->class,
             'props' => $this->props
         ];
     }
 
     public function __unserialize(array $data)
     {
+        $this->class = $data['class'];
         $this->props = $data['props'];
     }
 }
