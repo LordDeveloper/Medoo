@@ -1957,4 +1957,21 @@ class Database
 
         return implode($conjunctor . ' ', $stack);
     }
+
+    /**
+     * Import raw query from a sql file
+     *
+     * @param $file
+     * @return Promise
+     */
+    public function import($file): Promise
+    {
+        return call(function () use ($file) {
+            if (file_exists($file)) {
+                return yield $this->query(file_get_contents($file));
+            }
+
+            return false;
+        });
+    }
 }
