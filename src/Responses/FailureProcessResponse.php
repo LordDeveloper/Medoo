@@ -2,39 +2,47 @@
 
 namespace Medoo\Responses;
 
+use Exception;
+use ReflectionProperty;
 use Throwable;
 
 class FailureProcessResponse implements Response
 {
-    public $class;
-    public $message;
-    public $traces;
+    private array $props = [];
 
     public function __construct(Throwable $e)
     {
-        $this->class = get_class($e);
-        $this->message = $e->getMessage();
-        $this->traces = $e->getTraceAsString();
+        $this->props = [
+            'class' => get_class($e),
+            'code' => $e->getCode(),
+            'line' => $e->getLine(),
+            'message' => $e->getMessage(),
+            'trace' => $e->getTrace(),
+        ];
     }
 
     public function throw()
     {
-        throw new $this->class($this->message);
+        $throwable = new $this->class($this->message);
+
+        foreach ($this->props as $prop => $value) {
+            $reflection = new ReflectionProperty(Exception::class, $prop);
+            $reflection->setAccessible(true);
+            $reflection->setValue($throwable, $value);
+        }
+
+        throw $throwable;
     }
 
     public function __serialize()
     {
         return [
-            'class' => $this->class,
-            'message' => $this->message,
-            'traces' => $this->traces,
+            'props' => $this->props
         ];
     }
 
     public function __unserialize(array $data)
     {
-        $this->class = $data['class'];
-        $this->message = $data['message'];
-        $this->traces = $data['traces'];
+        $this->props = $data['props'];
     }
 }
