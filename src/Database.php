@@ -1512,10 +1512,10 @@ class Database
      *
      * @param $table
      * @param $wheres
-     * @param $attributes
+     * @param array $attributes
      * @return Promise
      */
-    public function selectOrCreate($table, $wheres, $attributes)
+    public function selectOrCreate($table, array $wheres, array $attributes = [])
     {
         return call(function () use ($table, $wheres, $attributes) {
             if ($data = yield $this->select($table, ['*'], $wheres)) {
