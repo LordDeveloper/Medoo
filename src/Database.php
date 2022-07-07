@@ -1508,6 +1508,26 @@ class Database
     }
 
     /**
+     * Select data from table and create if not exists
+     *
+     * @param $table
+     * @param $wheres
+     * @param $attributes
+     * @return Promise
+     */
+    public function selectOrCreate($table, $wheres, $attributes)
+    {
+        return call(function () use ($table, $wheres, $attributes) {
+            if ($data = yield $this->select($table, ['*'], $wheres)) {
+                return array_merge($attributes, $data);
+            }
+
+            yield $this->insert($table, array_merge($wheres, $attributes));
+            return yield $this->select($table, ['*'], $wheres);
+        });
+    }
+
+    /**
      * Replace old data with a new one.
      *
      * @param string $table
