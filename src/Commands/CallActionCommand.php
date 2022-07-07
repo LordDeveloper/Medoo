@@ -4,9 +4,9 @@ namespace Medoo\Commands;
 
 use Amp\Promise;
 use Error;
+use Generator;
 use Medoo\Environment;
 use Medoo\Responses\FailureProcessResponse;
-use Medoo\Responses\Response;
 use Medoo\Responses\SuccessProcessResponse;
 use Throwable;
 use function Amp\call;
@@ -25,8 +25,15 @@ class CallActionCommand implements Command
     {
         return call(function () use ($environment) {
             try {
+                $response = $environment->getDatabase()->{$this->action}(... $this->arguments);
+                if ($response instanceof Generator) {
+                    $response = yield from $response;
+                }
+                elseif ($response instanceof Promise) {
+                    $response = yield $response;
+                }
                 return new SuccessProcessResponse(
-                    yield $environment->getDatabase()->{$this->action}(... $this->arguments)
+                    $response
                 );
             } catch (Throwable|Error $e) {
                 return new FailureProcessResponse($e);
