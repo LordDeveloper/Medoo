@@ -27,7 +27,7 @@ use Medoo\Drivers\MySQL;
 // Running the event loop
 Loop::run(function () {
     // Connect the database.
-    $database = yield connect(MySQL::class, [
+    $database = connect(MySQL::class, [
         'host' => 'localhost',
         'database' => 'name',
         'username' => 'your_username',
