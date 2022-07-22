@@ -16,45 +16,52 @@ use function Opis\Closure\{serialize, unserialize};
 
 abstract class Driver implements DriverInterface, TransientResource
 {
-    const CONTEXT_CLOSE_TIMEOUT = 50;
+    const CONTEXT_CLOSE_TIMEOUT = 10;
     public Context\Context $context;
     public array $driverOptions;
-    public int $lastUsedAt;
+    public int $lastUsedAt = 0;
     public Mutex $mutex;
+    protected static array $connections = [];
 
     public function close(): Promise
     {
         return synchronized($this->mutex, function () {
-            if (!$this->isAlive()) {
-                return;
+            if ($this->isAlive()) {
+                try {
+                    return yield Promise\timeout($this->context->join(), self::CONTEXT_CLOSE_TIMEOUT);
+                } catch (TimeoutException) {
+                    $this->context->kill();
+                }
+
+                return true;
             }
 
-            try {
-                yield Promise\timeout($this->context->join(), self::CONTEXT_CLOSE_TIMEOUT);
-            } catch (TimeoutException) {
-                $this->context->kill();
-            }
+            return false;
         });
     }
 
     public function create(): Promise
     {
         return call(function () {
-            $this->mutex = new LocalMutex();
+            $options = $this->getDriverOptions();
 
-            $this->context = yield Context\run(__DIR__ . '/../database-worker.php');
+            return static::$connections[$options['type']] ??= yield call(function () use ($options) {
+                $this->mutex = new LocalMutex();
 
-            yield $this->context->send($this->getDriverOptions());
+                $this->context = yield Context\run(__DIR__ . '/../database-worker.php');
 
-            $response = unserialize(yield $this->context->receive());
+                yield $this->context->send($options);
 
-            if ($response instanceof FailureProcessResponse) {
-                $response->throw();
-            }
+                $response = unserialize(yield $this->context->receive());
 
-            $this->lastUsedAt = time();
+                if ($response instanceof FailureProcessResponse) {
+                    $response->throw();
+                }
 
-            return $this;
+                $this->lastUsedAt = time();
+
+                return $this;
+            });
         });
     }
 
@@ -92,6 +99,6 @@ abstract class Driver implements DriverInterface, TransientResource
 
     public function isAlive(): bool
     {
-        return $this->context->isRunning();
+        return isset($this->context) && $this->context->isRunning();
     }
 }

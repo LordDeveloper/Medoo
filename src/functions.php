@@ -10,13 +10,9 @@ use function Amp\call;
  *
  * @param $driver
  * @param array $options
- * @return Promise<Database>
+ * @return DatabaseConnection
  */
-function connect($driver, array $options): Promise
+function connect($driver, array $options): DatabaseConnection
 {
-    return call(function () use ($driver, $options) {
-        $driver = yield (new $driver($options))->create();
-
-        return new DatabaseConnection($driver);
-    });
+    return new DatabaseConnection(new $driver($options));
 }
